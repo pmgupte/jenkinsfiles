@@ -32,7 +32,7 @@ pipeline {
         }
     } // stages
     post {
-        always {
+        failure {
             echo "HTTP code is ${env.http_code}. expected was ${EXPECTED_HTTP_CODE}."
             sh "curl -X POST -H \'Content-type: application/json\' --data \'{\"text\":\"${WEBSITE_URL} status is ${env.http_code}\"}\' ${SLACK_WEBHOOK_URL}"
         }
