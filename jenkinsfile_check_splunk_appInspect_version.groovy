@@ -30,7 +30,7 @@ pipeline {
     post {
         changed {
             script {
-                sh "curl -X POST -H \'Content-type: application/json\' --data \'{\"text\":\"${env.message}\"}\' ${SLACK_WEBHOOK_URL}"
+                sh "curl -Ls -X POST -H \'Content-type: application/json\' --data \'{\"text\":\"${env.message}\"}\' ${SLACK_WEBHOOK_URL}"
             }
         }
     }
