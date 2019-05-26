@@ -15,6 +15,7 @@ pipeline {
             steps {
                 script {
                     def found_version = sh(returnStdout: true, script: 'curl -Ls http://dev.splunk.com/view/appinspect/SP-CAAAFBY | grep -o "v[[:digit:]]\\+\\.[[:digit:]]\\+\\.[[:digit:]]\\+" | head -1')
+                    found_version = found_version.trim()
                     if ("${found_version}" != "${LAST_KNOWN_VERSION}") {
                         env.message = "Splunk AppInspect ${found_version} RELEASED! Last known version was ${LAST_KNOWN_VERSION}."
                         error env.message
