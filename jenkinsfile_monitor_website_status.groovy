@@ -23,10 +23,11 @@ pipeline {
                     env.http_code = http_code
                     
                     if ("${http_code}" != "${EXPECTED_HTTP_CODE}") {
-                        error "${WEBSITE_URL} returned ${http_code}"
+                        env.message = "${WEBSITE_URL} returned HTTP ${http_code}, but expected was ${EXPECTED_HTTP_CODE}"
                     } else {
-                        echo "${WEBSITE_URL} returned expected HTTP code ${EXPECTED_HTTP_CODE}"
+                        env.message = "${WEBSITE_URL} returned expected HTTP code ${EXPECTED_HTTP_CODE}"
                     }
+                    echo env.message
                 }
             }
         }
@@ -34,9 +35,7 @@ pipeline {
     post {
         changed {
             script {
-                def message="${WEBSITE_URL} HTTP code is ${env.http_code}. Expected code is ${EXPECTED_HTTP_CODE}."
-                echo message
-                sh "curl -X POST -H \'Content-type: application/json\' --data \'{\"text\":\"${message}\"}\' ${SLACK_WEBHOOK_URL}"
+                sh "curl -X POST -H \'Content-type: application/json\' --data \'{\"text\":\"${env.message}\"}\' ${SLACK_WEBHOOK_URL}"
             }
         }
     }
