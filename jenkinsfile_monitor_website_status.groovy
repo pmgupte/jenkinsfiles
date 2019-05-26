@@ -33,8 +33,9 @@ pipeline {
     } // stages
     post {
         changed {
-            echo "HTTP code is ${env.http_code}. expected was ${EXPECTED_HTTP_CODE}."
-            sh "curl -X POST -H \'Content-type: application/json\' --data \'{\"text\":\"${WEBSITE_URL} status is ${env.http_code}\"}\' ${SLACK_WEBHOOK_URL}"
+            def message="${WEBSITE_URL} HTTP code is ${env.http_code}. Expected code is ${EXPECTED_HTTP_CODE}."
+            echo $message
+            sh "curl -X POST -H \'Content-type: application/json\' --data \'{\"text\":\"${message}\"}\' ${SLACK_WEBHOOK_URL}"
         }
     }
 }
