@@ -23,10 +23,10 @@ pipeline {
                     env.http_code = http_code
                     
                     if ("${http_code}" != "${EXPECTED_HTTP_CODE}") {
-                        env.message = "${WEBSITE_URL} returned HTTP ${http_code}, but expected was ${EXPECTED_HTTP_CODE}"
+                        env.message = "${WEBSITE_URL} DOWN! Site returned HTTP ${http_code}, but expected was ${EXPECTED_HTTP_CODE}"
                         error env.message
                     } else {
-                        env.message = "${WEBSITE_URL} returned expected HTTP code ${EXPECTED_HTTP_CODE}"
+                        env.message = "${WEBSITE_URL} UP! Site returned expected HTTP code ${EXPECTED_HTTP_CODE}"
                     }
                     echo env.message
                 }
