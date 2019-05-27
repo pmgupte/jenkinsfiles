@@ -16,7 +16,6 @@ pipeline {
             steps {
                 script {
                     def http_code = sh(returnStdout: true, script: '''
-                    curl --version
                     http_status_code=$(curl -s -o /dev/null -I -w "%{http_code}" "${WEBSITE_URL}")
                     echo $http_status_code
                     ''')
